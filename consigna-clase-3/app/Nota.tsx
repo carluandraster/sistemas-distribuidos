@@ -2,11 +2,11 @@
      * Representa una nota en la aplicación.
      * 
      * # Propiedades
-     * - `id`: Identificador único de la nota.
-     * - `titulo`: Título de la nota.
-     * - `texto`: Contenido de la nota.
-     * - `colorDeFondo`: Color de fondo de la nota.
-     * - `minutosDeValidez`: Tiempo en minutos que la nota es válida.
+     * - `Id`: Identificador único de la nota.
+     * - `Titulo`: Título de la nota.
+     * - `Texto`: Contenido de la nota.
+     * - `ColorDeFondo`: Color de fondo de la nota.
+     * - `MinutosDeValidez`: Tiempo en minutos que la nota es válida.
      * 
      * # Métodos
      * - `equals(obj: any): boolean`: Compara la nota actual con otro objeto para determinar si son iguales.
