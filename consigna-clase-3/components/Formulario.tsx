@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface PropsForm{
     editar: boolean,
@@ -24,6 +24,19 @@ export default function Formulario(props: PropsForm) {
     const [minutesInput, setMinutesInput] = useState(props.minutosDeValidezInicial.toString());
     const [color, setColor] = useState(props.colorDeFondoInicial);
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        setTitle(props.tituloInicial);
+        setText(props.textoInicial);
+        setMinutesInput(props.minutosDeValidezInicial.toString());
+        setColor(props.colorDeFondoInicial);
+        setError("");
+    }, [
+        props.tituloInicial,
+        props.textoInicial,
+        props.minutosDeValidezInicial,
+        props.colorDeFondoInicial,
+    ]);
 
     function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -51,31 +64,35 @@ export default function Formulario(props: PropsForm) {
         setMinutesInput("1");
         setError("");
     }
+
     return (
-        <form className="flex flex-col gap-4 rounded-lg border border-white/30 bg-white/10 p-6 shadow-lg backdrop-blur-md">
+        <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4 rounded-lg border border-white/30 bg-white/10 p-6 shadow-lg backdrop-blur-md">
+            {error && <p className="text-red-500">{error}</p>}
             <input
                 type="text"
                 placeholder="Título"
-                    className="rounded-lg border border-white/30 bg-white/10 p-2 text-slate-900 placeholder:text-slate-500 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className="rounded-lg border border-white/30 bg-white/10 p-2 text-white placeholder:text-white focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
             />
             <textarea
                 placeholder="Contenido"
-                    className="rounded-lg border border-white/30 bg-white/10 p-2 text-slate-900 placeholder:text-slate-500 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className="rounded-lg border border-white/30 bg-white/10 p-2 text-white placeholder:text-white focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
             />
             <input
                 type="color"
-                    className="h-10 w-10 rounded-lg border border-white/30 p-0 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className="h-10 w-10 rounded-lg border border-white/30 p-0 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
             />
             <input
                 type="number"
                 placeholder="Minutos de validez"
-                    className="rounded-lg border border-white/30 bg-white/10 p-2 text-slate-900 placeholder:text-slate-500 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                className="rounded-lg border border-white/30 bg-white/10 p-2 text-white placeholder:text-white focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 value={minutesInput}
                 onChange={(e) => setMinutesInput(e.target.value)}
             />

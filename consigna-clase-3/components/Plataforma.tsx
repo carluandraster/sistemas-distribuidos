@@ -13,10 +13,10 @@ export default function Plataforma(props: {notes: Note[];
     onEdit: (note: Note) => void;
     onDelete: (id: number) => void;}) {
     return (
-        <div className="flex min-h-screen flex-col items-center justify-between p-24">
-            <div className="flex flex-col items-center p-24">
+        <div className="flex flex-col items-center gap-4 p-4">
+            <div className="flex flex-col items-center p-4">
                 <h1 className="text-4xl font-bold">Plataforma de Notas</h1>
-                <p className="mt-4 text-lg text-slate-700">Crea y administra tus notas de manera sencilla.</p>
+                <p className="mt-4 text-lg text-white">Crea y administra tus notas de manera sencilla.</p>
             </div>
             {!props.ready ? (
                 "Cargando notas..."
@@ -25,9 +25,13 @@ export default function Plataforma(props: {notes: Note[];
             ) : (
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {props.notes.map((note) => (
-                        <Nota nota={note} onEditar={props.onEdit} onEliminar={props.onDelete}
-                        seleccionada={props.editingId === note.id}
-                        />))}
+                        <Nota key={note.id}
+                            nota={note}
+                            onEditar={() => props.onEdit(note)}
+                            onEliminar={() => props.onDelete(note.id)}
+                            seleccionada={props.editingId === note.id}
+                        />))
+                    }
                 </div>
             )}
         </div>

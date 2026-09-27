@@ -1,42 +1,72 @@
-import { convertirNotasAlmacenadas, expiraEn, Note, STORAGE_KEY } from "@/lib/Notas";
+import { convertirNotasAlmacenadas, estaExpirada, expiraEn, Note, STORAGE_KEY } from "@/lib/Notas";
 import { useEffect, useState } from "react";
 import Plataforma from "./Plataforma";
 import Formulario from "./Formulario";
 
-export default function NoteApp() {
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [ready, setReady] = useState(false);
+const notificacionesMandadas: Set<number> = new Set();
 
+export default function NoteApp() {
+    const [notes, setNotes] = useState<Note[]>([]);
+    const [editingId, setEditingId] = useState<number | null>(null);
+    const [ready, setReady] = useState(false);
+    const [now, setNow] = useState(0);
+
+    // Cargar notas desde localStorage al montar el componente
     useEffect(() => {
         const storedNotes = localStorage.getItem(STORAGE_KEY);
         if (storedNotes) {
             setNotes(convertirNotasAlmacenadas(storedNotes));
         }
         setReady(true);
+        setNow(Date.now());
     }, []);
 
+    // Reloj
+    useEffect(() => {
+        const timer = window.setInterval(() => setNow(Date.now()), 1000);
+        return () => window.clearInterval(timer);
+    }, []);
+
+    // Notificaciones
+    useEffect(() => {
+        if (ready && now !== 0 && typeof Notification !== "undefined" && Notification.permission === "granted") {
+            notes.forEach((note) => {
+                if (estaExpirada(note) && !note.notified && !notificacionesMandadas.has(note.id)) {
+                    new Notification(`Recordatorio: ${note.title}`, {
+                    body: note.text
+                        ? `${note.text} — se cumplieron ${note.minutes} min de validez.`
+                        : `Se cumplieron ${note.minutes} min de validez.`,
+                    });
+                    notificacionesMandadas.add(note.id);
+                    note.notified = true;
+                }
+            });
+        }
+    }, [notes, now, ready]);
+
     return (
-        <div className="flex min-h-screen flex-col items-center justify-between p-24">
+        <div className="flex min-h-screen flex-col items-center gap-4 p-4">
             <Plataforma
                 notes={notes}
                 ready={ready}
                 editingId={editingId}
                 onEdit={(note) => setEditingId(note.id)}
                 onDelete={(id) => {
-                    setNotes(notes.filter((note) => note.id !== id));
+                    const updatedNotes = notes.filter((note) => note.id !== id);
+                    setNotes(updatedNotes);
                     if (editingId === id) {
                         setEditingId(null);
                     }
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedNotes));
                 }}
             />
             {editingId !== null ? (
                 <Formulario
                     editar={true}
-                    tituloInicial={notes.find((n) => n.id === editingId)?.title ?? ""}
-                    textoInicial={notes.find((n) => n.id === editingId)?.text ?? ""}
-                    colorDeFondoInicial=""
-                    minutosDeValidezInicial={expiraEn(notes.find((n) => n.id === editingId) as Note) / 60000}
+                    tituloInicial={(notes.find((n) => n.id === editingId) as Note).title}
+                    textoInicial={(notes.find((n) => n.id === editingId) as Note).text}
+                    colorDeFondoInicial={(notes.find((n) => n.id === editingId) as Note).color}
+                    minutosDeValidezInicial={Math.max(1, Math.round(expiraEn(notes.find((n) => n.id === editingId) as Note) / 60000))}
                     onSubmit={(values) => {
                         const note = notes.find((n) => n.id === editingId);
 
@@ -47,8 +77,10 @@ export default function NoteApp() {
                         note.minutes = values.minutes;
                         note.color = values.color;
 
-                        setNotes([...notes]);
+                        const updatedNotes = [...notes];
+                        setNotes(updatedNotes);
                         setEditingId(null);
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedNotes));
                     }}
                     onCancelar={() => {
                         setEditingId(null);
@@ -71,7 +103,9 @@ export default function NoteApp() {
                             color: values.color,
                         }
 
-                        setNotes([...notes]);
+                        const updatedNotes = [...notes, note];
+                        setNotes(updatedNotes);
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedNotes));
                     }}
                     onCancelar={() => {}}
                 />}
