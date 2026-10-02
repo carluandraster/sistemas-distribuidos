@@ -3,6 +3,7 @@
     "dev": "npm --prefix consigna-clase-3 run dev"
   },
   "dependencies": {
+    "formik": "^2.4.9",
     "lucide-react": "^1.48.0"
   },
   "devDependencies": {
