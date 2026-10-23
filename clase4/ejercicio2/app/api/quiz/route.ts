@@ -34,8 +34,8 @@ async function POST(req: Request): Promise<Response> {
     const account = formData.get('account');
     const question = formData.get('question');
     const options = formData.get('options');
-    const answer = formData.get('answer');
-    const newQuiz = { id, account, question, options, answer };
+    // const answer = formData.get('answer');
+    const newQuiz = { id, account, question, options };
     return await insertQuiz(newQuiz).then(() => {
         return new Response(JSON.stringify(
             { message: 'Cuestionario agregado correctamente' }), { status: 200 });
