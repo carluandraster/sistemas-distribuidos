@@ -1,8 +1,56 @@
-export default function Home() {
+import { MultipleChoice } from '@/lib/MultipleChoice'; 
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { connection } from 'next/server';
+
+export const instant = false;
+
+/**
+ * This function is intended to read quiz data from a source (e.g., a database or an API).
+ */
+async function readQuiz(username: string): Promise<MultipleChoice[]> {
+  try {
+    return await fetch('@/app/api/quiz/route', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'account': username,
+      },
+    }).then((res) => res.json());
+  } catch {
+    return [];
+  }
+}
+
+export default async function Dashboard() {
+  await connection();
+  const sessionUsername = (await cookies()).get('session')?.value;
+  if (!sessionUsername) {
+    redirect('/');
+  }
+
+  const username = decodeURIComponent(sessionUsername);
+  const quizData = await readQuiz(username);
+
   return (
     <div>
       <h1>Welcome to the Dashboard</h1>
-      <p>This is the dashboard page.</p>
+      <p>Sesión iniciada correctamente.</p>
+      <dl>
+        <dt>Usuario</dt>
+        <dd>{username}</dd>
+        <dt>Estado</dt>
+        <dd>Autenticado</dd>
+      </dl>
+      {typeof quizData === "object" && quizData !== null && quizData.length > 0 ? (
+        <ul>
+          {quizData.map((question, index) => (
+            <li key={index}>{question.question}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No quiz data available.</p>
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import * as z from "zod";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -8,6 +9,8 @@ const schema = z.object({
 });
 
 export default function Home() {
+  const router = useRouter();
+
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -23,7 +26,21 @@ export default function Home() {
       return;
     }
 
-    console.log(result.data);
+    fetch("/api/login", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          console.error(data.error);
+        } else {
+          router.push("/dashboard");
+        }
+      })
+      .catch((error) => {
+        console.error("Error during login:", error);
+      });
   }
 
   return (
