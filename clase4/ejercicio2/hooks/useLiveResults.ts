@@ -9,19 +9,27 @@ import { useState, useEffect } from "react";
  * @returns Objeto con los resultados, el estado de carga y posibles errores
  */
 export function useLiveResults<T>(surveyId: string, intervalMs: number = 3000) {
+  // Estados para almacenar los resultados, el estado de carga y los errores
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // useEffect para manejar la lógica de polling y limpieza
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
+    let isMounted = true; // Bandera para verificar si el componente sigue montado
+    const controller = new AbortController(); // Controlador para abortar la solicitud fetch si el componente se desmonta
 
+    // Función para obtener los resultados de la encuesta
     async function fetchResults() {
       try {
-        const response = await fetch(`/api/surveys/${surveyId}/results`, {
+        const response = await fetch(`@/app/api/response`, {
           signal: controller.signal,
           cache: "no-store", // Evita que el navegador devuelva datos viejos en caché
+          method: "GET",
+          body: JSON.stringify({ surveyId }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
 
         if (!response.ok) {

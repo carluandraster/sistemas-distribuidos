@@ -3,12 +3,12 @@ import { mkdir, readFile, writeFile} from 'fs/promises';
 import path from 'path';
 
 export const STORAGE_DIR = path.join(process.cwd(), 'storage');
-const ACCOUNTS_PATH = path.join(STORAGE_DIR, 'accounts.json');
+export const ACCOUNTS_PATH = path.join(STORAGE_DIR, 'accounts.json');
 
 /**
  * Tipo cuenta de usuario que contiene el nombre de usuario y la contraseña encriptada.
  */
-type Account = {
+export type Account = {
     username: string;
     password: string; // Almacena la contraseña encriptada
 };
@@ -17,7 +17,7 @@ type Account = {
  * Lee el archivo de cuentas y devuelve un array de cuentas. Si el archivo no existe, lo crea y devuelve un array vacío.
  * @returns Un array de cuentas.
  */
-async function readAccounts(): Promise<Account[]> {
+export async function readAccounts(): Promise<Account[]> {
     try {
         await mkdir(STORAGE_DIR, { recursive: true });
         await writeFile(ACCOUNTS_PATH, '[]', { flag: 'a' }); // Crea el archivo si no existe
@@ -30,7 +30,7 @@ async function readAccounts(): Promise<Account[]> {
 
 export async function POST(req: Request) {
     try {
-        const formData = await req.formData();
+        const formData = req.headers;
         const username = formData.get('name');
         const password = formData.get('password');
         if (typeof username !== 'string' || typeof password !== 'string') {

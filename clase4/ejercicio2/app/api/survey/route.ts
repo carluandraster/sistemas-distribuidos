@@ -11,15 +11,16 @@ async function insertQuiz(newQuiz: any): Promise<void> {
     await writeFile(quizPath, JSON.stringify(existingData, null, 2), 'utf8');
 }
 
-// Lee y filtra los cuestionarios según cuenta
+// Lee y filtra los cuestionarios según cuenta o id
 async function GET(req: Request): Promise<Response> {
     const account = req.headers.get('account');
+    const id = req.headers.get('id');
     await mkdir(STORAGE_DIR, { recursive: true });
     const quizPath = `${STORAGE_DIR}/quiz.json`;
     return readFile(quizPath, 'utf8')
         .then((data) => {
             const quizData = JSON.parse(data);
-            const myQuizData = quizData.filter((q: any) => q.account === account);
+            const myQuizData = quizData.filter((q: any) => q.account === account || q.id === id);
             return new Response(JSON.stringify(myQuizData), { status: 200 });
         })
         .catch(() => {
