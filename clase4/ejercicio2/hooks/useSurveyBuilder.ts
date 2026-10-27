@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MultipleChoice } from "@/lib/MultipleChoice";
+import { Question } from "@/lib/Question";
 import { Quiz } from "@/lib/Quiz";
 
 /**
@@ -37,7 +37,7 @@ import { Quiz } from "@/lib/Quiz";
 export default function useSurveyBuilder(surveyId: string | null) {
     const [error, setError] = useState<string | null>(null);
     const [title, setTitle] = useState<string>("");
-    const [questions, setQuestions] = useState<MultipleChoice[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
     const [valid, setValid] = useState<boolean>(true);
 
     async function load_survey() {

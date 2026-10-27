@@ -1,4 +1,4 @@
-import { MultipleChoice } from "./MultipleChoice";
+import { MultipleChoice } from "./Question";
 
 export type Quiz = {
     id: string;

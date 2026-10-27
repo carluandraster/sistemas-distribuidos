@@ -1,9 +1,9 @@
-import type { MultipleChoice } from "../lib/MultipleChoice";
+import type { Question } from "../lib/Question";
 import { useState } from "react";
 
 type AnswerCardProps = {
     id: number;
-    multipleChoice: MultipleChoice;
+    Question: Question;
     editable?: boolean;
     onChangeQuestion?: (id: number, question: string) => void;
     onDeleteQuestion?: (id: number) => void;
@@ -15,7 +15,7 @@ type AnswerCardProps = {
 
 export default function AnswerCard({
     id,
-    multipleChoice,
+    Question,
     editable = false,
     onChangeQuestion,
     onDeleteQuestion,
@@ -37,16 +37,16 @@ export default function AnswerCard({
                     ?   <input
                             type="text"
                             className="rounded-md border border-solid border-black/[.08] bg-white p-2 shadow-sm dark:border-white/[.145] dark:bg-[#1a1a1a]"
-                            value={multipleChoice.question}
+                            value={Question.question}
                             onChange={(e) => onChangeQuestion?.(id, e.target.value)}
                         />
                     :   <h3 className="text-lg font-semibold text-black dark:text-zinc-50">
-                            {multipleChoice.question}
+                            {Question.question}
                         </h3>
                 }
             </div>
             <div className="flex flex-col gap-2">
-                {multipleChoice.options.map((option, index) => (
+                {Question.options.map((option, index) => (
                     <div
                         key={index}
                         className="flex items-center gap-2 rounded-md border border-solid border-black/[.08] bg-white p-2 shadow-sm hover:bg-gray-100 dark:border-white/[.145] dark:bg-[#1a1a1a] dark:hover:bg-[#2d2d2d]"
@@ -72,7 +72,7 @@ export default function AnswerCard({
                             <>
                                 <input
                                     type="radio"
-                                    name={multipleChoice.question}
+                                    name={Question.question}
                                     value={option}
                                     checked={false}
                                     onChange={() => {}}
