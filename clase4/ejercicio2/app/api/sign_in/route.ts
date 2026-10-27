@@ -1,13 +1,11 @@
 import crypto from 'crypto';
-import { mkdir, writeFile, readFile} from 'fs/promises';
+import { mkdir, writeFile} from 'fs/promises';
 import { STORAGE_DIR, ACCOUNTS_PATH, Account, readAccounts } from '../login/route';
 
 async function insertAccount(newAccount: Account) {
     const quizPath = `${STORAGE_DIR}/${ACCOUNTS_PATH}`;
     await mkdir(STORAGE_DIR, { recursive: true });
-    const existingData = await readFile(quizPath, 'utf8')
-        .then((data) => JSON.parse(data))
-        .catch(() => []);
+    const existingData = await readAccounts();
     existingData.push(newAccount);
     await writeFile(quizPath, JSON.stringify(existingData, null, 2), 'utf8');
 }

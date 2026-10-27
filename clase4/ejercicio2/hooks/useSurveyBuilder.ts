@@ -5,24 +5,36 @@ import { MultipleChoice } from "@/lib/MultipleChoice";
 import { Quiz } from "@/lib/Quiz";
 
 /**
- * Hook para construir una encuesta.
+ * # useSurveyBuilder
+ * **Hook para construir una encuesta.**
+ * 
+ * **Pre:** la encuesta aún no fue contestada por nadie
+ * 
  * @param surveyId <br>
  * ID de la encuesta si ya existía
+ * 
  * @returns Objeto con los datos de la encuesta:
- * - title: Título de la encuesta
- * - setTitle: Función para modificar el título
- * - questions: Lista de preguntas de la encuesta
- * - addQuestion: Función para agregar una pregunta
- * - removeQuestion: Función para eliminar una pregunta
- * - updateQuestion: Función para modificar una pregunta
- * - addOption: Función para agregar una opción a una pregunta
- * - removeOption: Función para eliminar una opción de una pregunta
- * - updateOption: Función para modificar una opción de una pregunta
- * - valid: Booleano que indica si la encuesta es válida (título y preguntas no vacías)
- * - submitSurvey: Función para enviar la encuesta al servidor
- * - error: Mensaje de error si ocurre algún problema
+ * - **title**: Título de la encuesta
+ * - **setTitle**: Función para modificar el título
+ * - **questions**: Lista de preguntas de la encuesta
+ * - **addQuestion**: Función para agregar una pregunta
+ * - **removeQuestion**: Función para eliminar una pregunta
+ * - **updateQuestion**: Función para modificar una pregunta
+ * - **addOption**: Función para agregar una opción a una pregunta
+ * - **removeOption**: Función para eliminar una opción de una pregunta
+ * - **updateOption**: Función para modificar una opción de una pregunta
+ * - **valid**: Booleano que indica si la encuesta es válida (título y preguntas no vacías)
+ * - **submitSurvey**: Función para enviar la encuesta al servidor
+ * - **error**: Mensaje de error si ocurre algún problema
+ * 
+ * @example const { 
+                title, setTitle, 
+                questions, addQuestion, removeQuestion, updateQuestion,
+                addOption, removeOption, updateOption,
+                valid, submitSurvey, error
+            } = useSurveyBuilder(id);
  */
-export function useSurveyBuilder(surveyId: string | null) {
+export default function useSurveyBuilder(surveyId: string | null) {
     const [error, setError] = useState<string | null>(null);
     const [title, setTitle] = useState<string>("");
     const [questions, setQuestions] = useState<MultipleChoice[]>([]);
@@ -69,23 +81,23 @@ export function useSurveyBuilder(surveyId: string | null) {
 
     /**
      * Elimina una pregunta del formulario
-     * @param question <br>
-     * La pregunta a eliminar
+     * @param idx <br>
+     * Índice de la pregunta a eliminar
      */
-    function removeQuestion(question: string) {
-        setQuestions(questions.filter((q) => q.question !== question));
+    function removeQuestion(idx: number) {
+        const questionRemoved = questions[idx].question;
+        setQuestions(questions.filter((q) => q.question !== questionRemoved));
     }
 
     /**
      * Actualiza una pregunta sin tocar sus opciones
      * @param oldQuestion <br>
-     * La pregunta a modificar
+     * Índice de la pregunta a modificar
      * @param newQuestion <br>
      * La pregunta que debería ir en su lugar
      */
-    function updateQuestion(oldQuestion: string, newQuestion: string) {
-        const i = questions.findIndex((q) => q.question === oldQuestion);
-        questions[i].question = newQuestion;
+    function updateQuestion(oldQuestion: number, newQuestion: string) {
+        questions[oldQuestion].question = newQuestion;
         setQuestions(questions);
     }
 
@@ -93,14 +105,13 @@ export function useSurveyBuilder(surveyId: string | null) {
     /**
      * Agrega una nueva opción a una pregunta
      * @param question<br>
-     * La pregunta a la cual agregar una opción
+     * Índice de la pregunta a la cual agregar una opción
      * @param option<br>
      * La nueva opción
      */
-    function addOption(question: string, option: string) {
+    function addOption(question: number, option: string) {
         questions
-            .find((q) => q.question === question)
-            ?.options
+            [question].options
             .push(option);
         setQuestions(questions);
     }
@@ -108,40 +119,41 @@ export function useSurveyBuilder(surveyId: string | null) {
     /**
      * Elimina una opción de una pregunta
      * @param question<br>
-     * La pregunta que tiene la opción a ser eliminada
+     * Índice de la pregunta que tiene la opción a ser eliminada
      * @param option<br>
      * La opción que debe ser removida
      */
-    function removeOption(question: string, option: string) {
-        const options = questions
-            .find((q) => q.question === question)
-            ?.options as string[];
-        options.splice(options.findIndex(o => o === option));
+    function removeOption(question: number, option: string) {
+        questions[question]
+            .options
+            .splice(
+                questions[question]
+                    .options
+                    .findIndex(o => o === option)
+            , 1);
         setQuestions(questions);
     }
 
     /**
      * Modifica una opción
      * @param question<br>
-     * Pregunta que contiene la opción a ser reemplazada
+     * Índice de la pregunta que contiene la opción a ser reemplazada
      * @param oldOption <br>
-     * La opción que debe ser modificada
+     * Índice de la opción que debe ser modificada
      * @param newOption <br>
      * La opción que va en su lugar
      */
-    function updateOption(question: string, oldOption: string, newOption: string) {
-        const options = questions
-            .find((q) => q.question === question)
-            ?.options as string[];
-        options[options.findIndex(o => o === oldOption)] = newOption;
+    function updateOption(question: number, oldOption: number, newOption: string) {
+        questions[question].options[oldOption] = newOption;
         setQuestions(questions);
     }
 
     // ## Validación
     useEffect(() => {
         const invalidQuestions = questions
-            .filter(q => q.question === "" || q.options
-                .filter(o => o === "").length > 0
+            .filter(q => q.question === "" ||
+                q.options.filter(o => o === "").length > 0 ||
+                q.options.length === 0
             )
         setValid(title !== "" && invalidQuestions.length === 0)
     }, [title, questions]);
