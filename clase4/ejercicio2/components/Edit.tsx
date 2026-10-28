@@ -1,7 +1,7 @@
 "use client";
 
 import useSurveyBuilder from "@/hooks/useSurveyBuilder";
-import Quiz from "./Quiz";
+import Quiz from "./Form";
 
 export default function Edit() {
     const id = sessionStorage.getItem("id");

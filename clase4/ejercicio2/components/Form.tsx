@@ -4,7 +4,7 @@ import { ComponentProps, useState } from "react";
 const QUESTION = 0;
 const OPTION = 1;
 
-type QuizProps = {
+type FormProps = {
     title: string;
     answers: ComponentProps<typeof AnswerCard>["multipleChoice"][];
     onCreate: CallableFunction[];
@@ -12,13 +12,13 @@ type QuizProps = {
     onDelete: CallableFunction[];
 };
 
-export default function Quiz({
+export default function Form({
     title,
     answers,
     onCreate = [], // [addQuestion, addOption]
     onChange = [], // [updateQuestion, updateOption, setTitle]
     onDelete = [], // [removeQuestion, removeOption]
-}: QuizProps) {
+}: FormProps) {
     const editable = onCreate.length + onChange.length + onDelete.length === 0;
     const [editingId, setEditingId] = useState<number>(NaN);
     return (
