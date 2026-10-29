@@ -8,9 +8,9 @@ interface PollCardEditProps {
     selected: boolean;
     onQuestionChange: (index: number, newQuestion: string) => void;
     onDeleteQuestion: (index: number) => void;
-    onAddOption: (newOption: string) => void;
-    onOptionChange: (optionIndex: number, newOption: string) => void;
-    onDeleteOption: (optionIndex: number) => void;
+    onAddOption: (index: number, newOption: string) => void;
+    onOptionChange: (qi: number, optionIndex: number, newOption: string) => void;
+    onDeleteOption: (questionIndex: number, optionIndex: number) => void;
     onClick: () => void;
 }
 
@@ -41,7 +41,7 @@ export function QuestionBoxEdit({
                         className="text-green-500 hover:text-green-700"
                         onClick={(e) => {
                             e.stopPropagation();
-                            onAddOption("");
+                            onAddOption(index, "");
                         }}>
                         Agregar opción
                     </button>
@@ -59,14 +59,15 @@ export function QuestionBoxEdit({
                                 type="text"
                                 name={`question-${index} - option-${i}`}
                                 key={i}
-                                onChange={(e) => onOptionChange(i, e.target.value)}>
+                                value={option}
+                                onChange={(e) => onOptionChange(index, i, e.target.value)}>
                                 {option}
                             </input>
                             <button
                                 className="text-red-500 hover:text-red-700"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    onDeleteOption(i);
+                                    onDeleteOption(index, i);
                                 }}>
                                 Eliminar opción
                             </button>

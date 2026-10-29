@@ -1,47 +1,28 @@
 import AnswerCard from "./AnswerCard";
-import { ComponentProps, useState } from "react";
+import { ReactNode } from "react";
+import { Quiz } from "../lib/Quiz";
 
 const QUESTION = 0;
 const OPTION = 1;
 
 type FormProps = {
-    title: string;
-    answers: ComponentProps<typeof AnswerCard>["multipleChoice"][];
-    onCreate: CallableFunction[];
-    onChange: CallableFunction[];
-    onDelete: CallableFunction[];
+    title: ReactNode;
+    children: ReactNode;
+    btnSubmit: ReactNode;
 };
 
 export default function Form({
     title,
-    answers,
-    onCreate = [], // [addQuestion, addOption]
-    onChange = [], // [updateQuestion, updateOption, setTitle]
-    onDelete = [], // [removeQuestion, removeOption]
+    children,
+    btnSubmit
 }: FormProps) {
-    const editable = onCreate.length + onChange.length + onDelete.length === 0;
-    const [editingId, setEditingId] = useState<number>(NaN);
     return (
         <div className="flex flex-col gap-4 rounded-lg border border-solid border-black/[.08] bg-white p-4 shadow-sm dark:border-white/[.145] dark:bg-[#1a1a1a]">
             <div className="flex flex-col gap-2">
-                <h2 className="text-xl font-semibold text-black dark:text-zinc-50" contentEditable={editable}>
-                    {title}
-                </h2>
+                {title}
             </div>
-            {answers.map((answer, index) => (
-                <AnswerCard
-                    key={index}
-                    id={index}
-                    multipleChoice={answer}
-                    editable={index === editingId && editable}
-                    onChangeQuestion = {onChange[QUESTION]}
-                    onDeleteQuestion = {onDelete[QUESTION]}
-                    onCreateOption = {onCreate[OPTION]}
-                    onChangeOption = {onChange[OPTION]}
-                    onDeleteOption={onDelete[OPTION]}
-                    onClick = {() => setEditingId(index)}
-                />
-            ))}
+            {children}
+            {btnSubmit}
         </div>
     )
 }

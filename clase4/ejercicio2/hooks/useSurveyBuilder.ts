@@ -123,13 +123,11 @@ export default function useSurveyBuilder(surveyId: string | null) {
      * @param option<br>
      * La opción que debe ser removida
      */
-    function removeOption(question: number, option: string) {
+    function removeOption(question: number, option: number) {
         questions[question]
             .options
             .splice(
-                questions[question]
-                    .options
-                    .findIndex(o => o === option)
+                option
             , 1);
         setQuestions(questions);
     }

@@ -1,7 +1,9 @@
 "use client";
 
 import useSurveyBuilder from "@/hooks/useSurveyBuilder";
-import Quiz from "./Form";
+import Form from "./Form";
+import { QuestionBoxEdit } from "./QuestionBoxEdit";
+import { useState } from "react";
 
 export default function Edit() {
     const id = sessionStorage.getItem("id");
@@ -11,13 +13,43 @@ export default function Edit() {
         addOption, removeOption, updateOption,
         valid, submitSurvey, error
     } = useSurveyBuilder(id);
+    const [editingId, setEditingId] = useState<number>(NaN);
     return (
-        <Quiz
-            title={title}
-            answers={questions}
-            onCreate={[addQuestion, addOption]}
-            onChange={[updateQuestion, updateOption, setTitle]}
-            onDelete={[removeQuestion, removeOption]}
-        />
+        <Form
+            title={
+                <input
+                    className="text-xl font-semibold text-black dark:text-zinc-50"
+                    contentEditable={true}
+                    suppressContentEditableWarning={true}
+                    onChange={(e) => setTitle(e.target.value)}
+                >
+                    {title}
+                </input>
+            }
+            btnSubmit={
+                <button
+                    className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                    onClick={submitSurvey}
+                    disabled={!valid}
+                >
+                    Save
+                </button>
+            }
+        >
+            {questions.map((question, index) => (
+                <QuestionBoxEdit
+                    key={index}
+                    index={index}
+                    question={question}
+                    selected={editingId === index}
+                    onQuestionChange={updateQuestion}
+                    onDeleteQuestion={removeQuestion}
+                    onAddOption={addOption}
+                    onOptionChange={updateOption}
+                    onDeleteOption={removeOption}
+                    onClick={() => setEditingId(index)}
+                />
+            ))}
+        </Form>
     );
 }
