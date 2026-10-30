@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { STORAGE_DIR } from '@/app/api/login/route';
+import { Question } from '@/lib/Question';
 
 async function insertQuiz(newQuiz: any): Promise<void> {
     const quizPath = `${STORAGE_DIR}/quiz.json`;
@@ -31,11 +32,16 @@ async function GET(req: Request): Promise<Response> {
 // Manda un cuestionario a la cuenta correspondiente
 async function POST(req: Request): Promise<Response> {
     const formData = await req.formData();
-    const id = formData.get('id');
-    const account = formData.get('account');
-    const question = formData.get('question');
-    const options = formData.get('options');
-    // const answer = formData.get('answer');
+    const id_survey = formData.get('id');
+    const title = formData.get('title');
+    const account = formData.get('author');
+    const questionWithOptions: Question[] = formData.get('questions');
+    const [question, options] = questionWithOptions.reduce(
+        ([q, o], item) => {
+            q.push(item.question);
+            o.push(...item.options);
+            return [q, o];
+        }, [[], []]);
     const newQuiz = { id, account, question, options };
     return await insertQuiz(newQuiz).then(() => {
         return new Response(JSON.stringify(

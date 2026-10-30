@@ -14,6 +14,7 @@ import { Quiz } from "@/lib/Quiz";
  * ID de la encuesta si ya existía
  * 
  * @returns Objeto con los datos de la encuesta:
+ * - **setUser**: Función para establecer el usuario que está creando la encuesta
  * - **title**: Título de la encuesta
  * - **setTitle**: Función para modificar el título
  * - **questions**: Lista de preguntas de la encuesta
@@ -39,6 +40,7 @@ export default function useSurveyBuilder(surveyId: string | null) {
     const [title, setTitle] = useState<string>("");
     const [questions, setQuestions] = useState<Question[]>([]);
     const [valid, setValid] = useState<boolean>(true);
+    const [user, setUser] = useState<string | null>(null);
 
     async function load_survey() {
         let id = surveyId as string;
@@ -153,15 +155,17 @@ export default function useSurveyBuilder(surveyId: string | null) {
                 q.options.filter(o => o === "").length > 0 ||
                 q.options.length === 0
             )
-        setValid(title !== "" && invalidQuestions.length === 0)
+        setValid(title !== "" && invalidQuestions.length === 0 && user !== null);
     }, [title, questions]);
 
     // ## Guardado
-    async function submitSurvey(owner: string) {
+    async function submitSurvey() {
+        const owner = user as string;
         surveyId = surveyId === null
             ? crypto.randomUUID()
             : surveyId;
-        const newSurvey: Quiz = {
+        const newSurvey = {
+            author: owner,
             id: surveyId,
             title,
             questions
@@ -182,6 +186,7 @@ export default function useSurveyBuilder(surveyId: string | null) {
         }
     }
     return {
+        setUser,
         title, setTitle,
         questions, addQuestion, removeQuestion, updateQuestion,
         addOption, removeOption, updateOption,
