@@ -1,14 +1,5 @@
 import crypto from 'crypto';
-import { mkdir, writeFile} from 'fs/promises';
-import { STORAGE_DIR, ACCOUNTS_PATH, Account, readAccounts } from '../login/route';
-
-async function insertAccount(newAccount: Account) {
-    const quizPath = `${STORAGE_DIR}/${ACCOUNTS_PATH}`;
-    await mkdir(STORAGE_DIR, { recursive: true });
-    const existingData = await readAccounts();
-    existingData.push(newAccount);
-    await writeFile(quizPath, JSON.stringify(existingData, null, 2), 'utf8');
-}
+import { prisma } from '@/lib/prisma';
 
 export async function POST(req: Request) {
     try {
@@ -18,14 +9,17 @@ export async function POST(req: Request) {
             return new Response(JSON.stringify({ error: 'Datos de acceso inválidos' }), { status: 400 });
         }
         const passwordCrypted = crypto.createHash('sha256').update(password).digest('hex');
-        const accounts = await readAccounts();
-        if (accounts.find((u) => u.username === username)) {
+        const account = await prisma.account.findUnique({ where: { username } });
+        if (account) {
             return new Response(JSON.stringify({ error: 'El usuario ya existe' }), { status: 400 });
         }
-        await insertAccount({
-            username: username,
-            password: passwordCrypted
-        })
+        await prisma.account.create({
+            data: {
+                username,
+                password: passwordCrypted,
+            },
+        });
+        return new Response(JSON.stringify({ message: 'Cuenta creada correctamente' }), { status: 201 });
     } catch (e) {
         const message = (e as Error).message;
         return new Response(JSON.stringify({ error: `Error al procesar la solicitud: ${message}` }), { status: 500 });

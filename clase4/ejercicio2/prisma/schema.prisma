@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  username String   @id @db.VarChar(32)
+  password String   @db.VarChar(64)
+  surveys  Survey[]
+
+  @@map("Account")
+}
+
+model Survey {
+  idSurvey  Int        @id @default(autoincrement()) @map("id_suvey")
+  title     String     @db.VarChar(32)
+  author    String     @db.VarChar(32)
+  account   Account    @relation(fields: [author], references: [username], onDelete: Cascade)
+  questions Question[]
+
+  @@map("Survey")
+}
+
+model Question {
+  idQuestion Int      @id @default(autoincrement()) @map("id_question")
+  label      String   @db.VarChar(32)
+  idSurvey   Int      @map("id_survey")
+  survey     Survey   @relation(fields: [idSurvey], references: [idSurvey], onDelete: Cascade)
+  options    Option[]
+
+  @@map("Question")
+}
+
+model Option {
+  idQuestion Int      @map("id_question")
+  idOption   Int      @map("id_option")
+  label      String   @db.VarChar(32)
+  votes      Int      @default(0)
+  question   Question @relation(fields: [idQuestion], references: [idQuestion], onDelete: Cascade)
+
+  @@id([idQuestion, idOption])
+  @@map("Option")
+}
