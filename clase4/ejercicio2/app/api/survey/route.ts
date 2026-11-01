@@ -1,6 +1,3 @@
-import { mkdir, readFile } from "fs/promises";
-import { Question } from "@/lib/Question";
-import { useInsert } from "@/hooks/persistence/useInsert";
 import { prisma } from "@/lib/prisma";
 
 // Lee y filtra los cuestionarios según cuenta o id
@@ -9,7 +6,7 @@ async function GET(req: Request): Promise<Response> {
   const id = req.headers.get("id");
   if (account) {
     return await prisma.survey
-      .findMany({ where: { account } })
+      .findMany({ where: { author: account } })
       .then((surveys: any) => {
         return new Response(JSON.stringify(surveys), {
           status: 200,
@@ -20,7 +17,16 @@ async function GET(req: Request): Promise<Response> {
       });
   } else if (id) {
     return await prisma.survey
-      .findUnique({ where: { id } })
+      .findUnique({
+        where: { idSurvey: parseInt(id) },
+        include: {
+          questions: {
+            include: {
+              options: true,
+            },
+          },
+        },
+      })
       .then((survey: any) => {
         if (survey) {
           return new Response(JSON.stringify(survey), {
@@ -47,8 +53,8 @@ async function POST(req: Request): Promise<Response> {
   return await prisma.survey
     .create({
       data: {
-        author: req.headers.get("account") || "",
         title: req.headers.get("title") || "",
+        author: req.headers.get("account") || "",
       },
     })
     .then((survey: any) => {
@@ -78,7 +84,7 @@ async function DELETE(req: Request): Promise<Response> {
     );
   } else {
     return await prisma.survey
-      .delete({ where: { id: parseInt(id) } })
+      .delete({ where: { idSurvey: parseInt(id) } })
       .then((survey: any) => {
         return new Response(JSON.stringify(survey), {
           status: 200,
@@ -108,7 +114,7 @@ async function PUT(req: Request): Promise<Response> {
   } else {
     return await prisma.survey
       .update({
-        where: { id: parseInt(id) },
+        where: { idSurvey: parseInt(id) },
         data: { title },
       })
       .then((survey: any) => {
