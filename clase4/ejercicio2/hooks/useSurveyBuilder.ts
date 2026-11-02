@@ -45,24 +45,26 @@ export default function useSurveyBuilder(surveyId: string | null) {
     async function load_survey() {
         let id = surveyId as string;
         await fetch(`@/app/api/survey`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "id": id, // Agrega el ID de la encuesta a los encabezados
-            },
-        }).then(async (response) => {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            id: id, // Agrega el ID de la encuesta a los encabezados
+        },
+        })
+        .then(async (response) => {
             if (!response.ok) {
-                throw new Error("Falló la API");
+            throw new Error("Falló la API");
             } else {
-                const json: Quiz = await response.json();
-                setTitle(json.title);
-                setQuestions(json.questions);
+            const json: Quiz = await response.json();
+            setTitle(json.title);
+            setQuestions(json.questions);
             }
-        }).catch(e => setError(`Error: ${e}`))
+        })
+        .catch((e) => setError(`Error: ${e}`));
     }
 
     // Si el formulario ya existía, lo solicito
-    if (surveyId != null){
+    if (surveyId != null) {
         load_survey();
     }
 
@@ -74,11 +76,26 @@ export default function useSurveyBuilder(surveyId: string | null) {
      * @param question<br>
      * Nueva pregunta
      */
-    function addQuestion(question: string) {
-        setQuestions([...questions, {
+    async function addQuestion(question: string) {
+        setQuestions([
+        ...questions,
+        {
             question,
-            options: []
-        }])
+            options: [],
+        },
+        ]);
+        await fetch(`@/app/api/question`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                id: surveyId as string,
+                text: question,
+            },
+        }).then(async (response) => {
+            if (!response.ok) {
+                throw new Error("Falló la API");
+            }
+        }).catch((e) => setError(`Error: ${e}`));
     }
 
     /**
@@ -86,8 +103,20 @@ export default function useSurveyBuilder(surveyId: string | null) {
      * @param idx <br>
      * Índice de la pregunta a eliminar
      */
-    function removeQuestion(idx: number) {
+    async function removeQuestion(idx: number) {
         const questionRemoved = questions[idx].question;
+        await fetch(`@/app/api/question`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                id: surveyId as string,
+                text: questionRemoved,
+            },
+        }).then(async (response) => {
+            if (!response.ok) {
+                throw new Error("Falló la API");
+            }
+        }).catch((e) => setError(`Error: ${e}`));
         setQuestions(questions.filter((q) => q.question !== questionRemoved));
     }
 
@@ -98,7 +127,19 @@ export default function useSurveyBuilder(surveyId: string | null) {
      * @param newQuestion <br>
      * La pregunta que debería ir en su lugar
      */
-    function updateQuestion(oldQuestion: number, newQuestion: string) {
+    async function updateQuestion(oldQuestion: number, newQuestion: string) {
+        await fetch(`@/app/api/question`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                id: surveyId as string,
+                text: newQuestion,
+            },
+        }).then(async (response) => {
+            if (!response.ok) {
+                throw new Error("Falló la API");
+            }
+        }).catch((e) => setError(`Error: ${e}`));
         questions[oldQuestion].question = newQuestion;
         setQuestions(questions);
     }
@@ -111,10 +152,20 @@ export default function useSurveyBuilder(surveyId: string | null) {
      * @param option<br>
      * La nueva opción
      */
-    function addOption(question: number, option: string) {
-        questions
-            [question].options
-            .push(option);
+    async function addOption(question: number, option: string) {
+        await fetch(`@/app/api/question`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                id: surveyId as string,
+                text: option,
+            },
+        }).then(async (response) => {
+            if (!response.ok) {
+                throw new Error("Falló la API");
+            }
+        }).catch((e) => setError(`Error: ${e}`));
+        questions[question].options.push(option);
         setQuestions(questions);
     }
 
@@ -125,12 +176,20 @@ export default function useSurveyBuilder(surveyId: string | null) {
      * @param option<br>
      * La opción que debe ser removida
      */
-    function removeOption(question: number, option: number) {
-        questions[question]
-            .options
-            .splice(
-                option
-            , 1);
+    async function removeOption(question: number, option: number) {
+        await fetch(`@/app/api/question`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                id: surveyId as string,
+                text: questions[question].options[option],
+            },
+        }).then(async (response) => {
+            if (!response.ok) {
+                throw new Error("Falló la API");
+            }
+        }).catch((e) => setError(`Error: ${e}`));
+        questions[question].options.splice(option, 1);
         setQuestions(questions);
     }
 
@@ -143,53 +202,71 @@ export default function useSurveyBuilder(surveyId: string | null) {
      * @param newOption <br>
      * La opción que va en su lugar
      */
-    function updateOption(question: number, oldOption: number, newOption: string) {
+    async function updateOption(
+        question: number,
+        oldOption: number,
+        newOption: string,
+    ) {
+        await fetch(`@/app/api/question`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                id: surveyId as string,
+                text: newOption,
+            },
+        }).then(async (response) => {
+            if (!response.ok) {
+                throw new Error("Falló la API");
+            }
+        }).catch((e) => setError(`Error: ${e}`));
         questions[question].options[oldOption] = newOption;
         setQuestions(questions);
     }
 
     // ## Validación
     useEffect(() => {
-        const invalidQuestions = questions
-            .filter(q => q.question === "" ||
-                q.options.filter(o => o === "").length > 0 ||
-                q.options.length === 0
-            )
+        const invalidQuestions = questions.filter(
+        (q) =>
+            q.question === "" ||
+            q.options.filter((o) => o === "").length > 0 ||
+            q.options.length === 0,
+        );
         setValid(title !== "" && invalidQuestions.length === 0 && user !== null);
     }, [title, questions]);
 
     // ## Guardado
-    async function submitSurvey() {
-        const owner = user as string;
-        surveyId = surveyId === null
-            ? crypto.randomUUID()
-            : surveyId;
-        const newSurvey = {
-            author: owner,
-            id: surveyId,
-            title,
-            questions
-        };
-        try {
-            const response = await fetch(`@/app/api/survey`, {
-                method: "POST",
+    useEffect(() => {
+        const petition = async () => {
+            await fetch(`@/app/api/survey`, {
+                method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    id: surveyId as string,
+                    title: title,
                 },
-                body: JSON.stringify(newSurvey)
-            });
-            if (!response.ok) {
-                throw new Error("Falló la API");
-            }
-        } catch (error) {
-            setError(`Error al enviar la encuesta: ${error}`);
+            })
+                .then(async (response) => {
+                    if (!response.ok) {
+                        throw new Error("Falló la API");
+                    }
+                })
+                .catch((e) => setError(`Error: ${e}`));
         }
-    }
+        if (!valid) return;
+        petition();
+    }, [title]);
     return {
         setUser,
-        title, setTitle,
-        questions, addQuestion, removeQuestion, updateQuestion,
-        addOption, removeOption, updateOption,
-        valid, submitSurvey, error
+        title,
+        setTitle,
+        questions,
+        addQuestion,
+        removeQuestion,
+        updateQuestion,
+        addOption,
+        removeOption,
+        updateOption,
+        valid,
+        error,
     };
 }
