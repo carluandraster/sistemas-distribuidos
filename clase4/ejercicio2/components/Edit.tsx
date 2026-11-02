@@ -7,11 +7,11 @@ import { useState } from "react";
 
 export default function Edit() {
     const id = sessionStorage.getItem("id");
-    const { 
-        title, setTitle, 
+    const {
+        title, setTitle,
         questions, addQuestion, removeQuestion, updateQuestion,
         addOption, removeOption, updateOption,
-        valid, submitSurvey, error
+        valid, error
     } = useSurveyBuilder(id);
     const [editingId, setEditingId] = useState<number>(NaN);
     return (
@@ -35,10 +35,10 @@ export default function Edit() {
                 btnSubmit={
                     <button
                         className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
-                        onClick={submitSurvey}
+                        onClick={onShare}
                         disabled={!valid}
                     >
-                        Save
+                        Share
                     </button>
                 }
             >
@@ -56,7 +56,7 @@ export default function Edit() {
                         onClick={() => setEditingId(index)}
                     />
                 ))}
-                <button onClick={()=>addQuestion("")}>Add Question</button>
+                <button onClick={() => addQuestion("")}>Add Question</button>
             </Form>
         </div>
     );
