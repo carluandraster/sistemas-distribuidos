@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="lYm3ouVFP-tpcnK_o9U_" name="Página-1">
-        <mxGraphModel dx="945" dy="588" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="548" dy="341" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -40,32 +40,86 @@
                         <mxPoint x="10" y="110" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-1" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-10" style="edgeStyle=none;html=1;" target="OSyGBxKKuvb0z-Hv_2xs-15">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="OSyGBxKKuvb0z-Hv_2xs-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;Iniciar sesión&lt;/font&gt;" vertex="1">
                     <mxGeometry height="60" width="120" x="45" y="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-2" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-11" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="OSyGBxKKuvb0z-Hv_2xs-16">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="OSyGBxKKuvb0z-Hv_2xs-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;Registrarse&lt;/font&gt;" vertex="1">
                     <mxGeometry height="60" width="120" x="45" y="210" as="geometry"/>
                 </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-3" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-12" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="OSyGBxKKuvb0z-Hv_2xs-17">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="OSyGBxKKuvb0z-Hv_2xs-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;Crear nota&lt;/font&gt;" vertex="1">
                     <mxGeometry height="60" width="120" x="45" y="290" as="geometry"/>
                 </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-4" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-13" style="edgeStyle=none;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="OSyGBxKKuvb0z-Hv_2xs-18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="OSyGBxKKuvb0z-Hv_2xs-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;Eliminar nota&lt;/font&gt;" vertex="1">
-                    <mxGeometry height="60" width="120" x="45" y="370" as="geometry"/>
+                    <mxGeometry height="60" width="120" x="45" y="460" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-5" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-14" style="edgeStyle=none;html=1;entryX=0.008;entryY=0.376;entryDx=0;entryDy=0;" target="OSyGBxKKuvb0z-Hv_2xs-18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-18" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-14" style="edgeStyle=none;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="OSyGBxKKuvb0z-Hv_2xs-17">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="OSyGBxKKuvb0z-Hv_2xs-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;Editar nota&lt;/font&gt;" vertex="1">
-                    <mxGeometry height="60" width="120" x="45" y="450" as="geometry"/>
+                    <mxGeometry height="60" width="120" x="45" y="375" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-11" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-15" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="NIRro4m07JFb67X3Gi_0-6">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="OSyGBxKKuvb0z-Hv_2xs-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot; face=&quot;Lucida Console&quot;&gt;&amp;lt;Login/&amp;gt;&lt;/font&gt;" vertex="1">
                     <mxGeometry height="60" width="120" x="240" y="130" as="geometry"/>
                 </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-12" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-16" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="NIRro4m07JFb67X3Gi_0-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="OSyGBxKKuvb0z-Hv_2xs-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot; face=&quot;Lucida Console&quot;&gt;&amp;lt;SignIn/&amp;gt;&lt;/font&gt;" vertex="1">
                     <mxGeometry height="60" width="120" x="240" y="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-9" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-17" style="edgeStyle=none;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="NIRro4m07JFb67X3Gi_0-8">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="OSyGBxKKuvb0z-Hv_2xs-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot; face=&quot;Lucida Console&quot;&gt;&amp;lt;Form/&amp;gt;&lt;/font&gt;" vertex="1">
                     <mxGeometry height="60" width="120" x="240" y="290" as="geometry"/>
                 </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-10" edge="1" parent="1" source="OSyGBxKKuvb0z-Hv_2xs-18" style="edgeStyle=none;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="NIRro4m07JFb67X3Gi_0-8">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="OSyGBxKKuvb0z-Hv_2xs-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot; face=&quot;Lucida Console&quot;&gt;&amp;lt;Note/&amp;gt;&lt;/font&gt;" vertex="1">
                     <mxGeometry height="60" width="120" x="240" y="410" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-15" edge="1" parent="1" source="NIRro4m07JFb67X3Gi_0-6" style="edgeStyle=none;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="NIRro4m07JFb67X3Gi_0-13">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot; face=&quot;Lucida Console&quot;&gt;useLogAuth&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="60" width="170" x="429" y="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-16" edge="1" parent="1" source="NIRro4m07JFb67X3Gi_0-7" style="edgeStyle=none;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="NIRro4m07JFb67X3Gi_0-13">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot; face=&quot;Lucida Console&quot;&gt;useUserBuilder&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="60" width="170" x="429" y="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-17" edge="1" parent="1" source="NIRro4m07JFb67X3Gi_0-8" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="NIRro4m07JFb67X3Gi_0-14">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot; face=&quot;Lucida Console&quot;&gt;useNoteBuilder&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="60" width="170" x="429" y="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot; face=&quot;Lucida Console&quot;&gt;user&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="60" width="110" x="670" y="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="NIRro4m07JFb67X3Gi_0-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;font style=&quot;font-size: 19px;&quot; face=&quot;Lucida Console&quot;&gt;note&lt;/font&gt;" vertex="1">
+                    <mxGeometry height="60" width="110" x="665" y="350" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

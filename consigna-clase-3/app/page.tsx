@@ -1,8 +1,7 @@
-"use client";
-import NoteApp from "@/components/NoteApp";
+import Login from "@/components/Login";
 
 export default function Home() {
-  return(
-    <NoteApp/>
-  )
+    return (
+        <Login />
+    )
 }

@@ -1,63 +1,31 @@
-import { convertirNotasAlmacenadas, estaExpirada, expiraEn, Note, STORAGE_KEY } from "@/lib/Notas";
-import { useEffect, useState } from "react";
+import { expiraEn, Note } from "@/lib/Notas";
+import { useState } from "react";
+import useNoteBuilder from "@/hooks/useNoteBuilder";
+import useWatch from "@/hooks/useWatch";
 import Plataforma from "./Plataforma";
 import Formulario from "./Formulario";
+import useNotifications from "@/hooks/useNotifications";
 
-const notificacionesMandadas: Set<number> = new Set();
+
 
 export default function NoteApp() {
-    const [notes, setNotes] = useState<Note[]>([]);
     const [editingId, setEditingId] = useState<number | null>(null);
-    const [ready, setReady] = useState(false);
-    const [now, setNow] = useState(0);
-
-    // Cargar notas desde localStorage al montar el componente
-    useEffect(() => {
-        const storedNotes = localStorage.getItem(STORAGE_KEY);
-        if (storedNotes) {
-            setNotes(convertirNotasAlmacenadas(storedNotes));
-        }
-        setReady(true);
-        setNow(Date.now());
-    }, []);
-
-    // Reloj
-    useEffect(() => {
-        const timer = window.setInterval(() => setNow(Date.now()), 1000);
-        return () => window.clearInterval(timer);
-    }, []);
-
-    // Notificaciones
-    useEffect(() => {
-        if (ready && now !== 0 && typeof Notification !== "undefined" && Notification.permission === "granted") {
-            notes.forEach((note) => {
-                if (estaExpirada(note) && !note.notified && !notificacionesMandadas.has(note.id)) {
-                    new Notification(`Recordatorio: ${note.title}`, {
-                    body: note.text
-                        ? `${note.text} — se cumplieron ${note.minutes} min de validez.`
-                        : `Se cumplieron ${note.minutes} min de validez.`,
-                    });
-                    notificacionesMandadas.add(note.id);
-                    note.notified = true;
-                }
-            });
-        }
-    }, [notes, now, ready]);
+    const now = useWatch();
+    const { notes, error, ready,
+        addNote, editNote, deleteNote
+    } = useNoteBuilder("usuario"); // Reemplaza "usuario" con el nombre de usuario real
+    useNotifications(now, ready, notes);
 
     return (
         <div className="flex min-h-screen flex-col items-center gap-4 p-4">
+            {error && <div className="text-red-500">{error}</div>}
             <Plataforma
                 notes={notes}
                 ready={ready}
                 editingId={editingId}
                 onEdit={(note) => setEditingId(note.id)}
                 onDelete={(id) => {
-                    const updatedNotes = notes.filter((note) => note.id !== id);
-                    setNotes(updatedNotes);
-                    if (editingId === id) {
-                        setEditingId(null);
-                    }
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedNotes));
+                    deleteNote(id);
                 }}
             />
             {editingId !== null ? (
@@ -77,38 +45,41 @@ export default function NoteApp() {
                         note.minutes = values.minutes;
                         note.color = values.color;
 
-                        const updatedNotes = [...notes];
-                        setNotes(updatedNotes);
-                        setEditingId(null);
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedNotes));
+                        editNote({
+                            id: note.id,
+                            title: note.title,
+                            text: note.text,
+                            minutes: note.minutes,
+                            createdAt: now,
+                            notified: false,
+                            color: note.color,
+                        });
                     }}
                     onCancelar={() => {
                         setEditingId(null);
                     }}
                 />
-            ): <Formulario
-                    editar={false}
-                    tituloInicial={""}
-                    textoInicial={""}
-                    colorDeFondoInicial=""
-                    minutosDeValidezInicial={0}
-                    onSubmit={(values) => {
-                        const note = {
-                            id: Date.now(),
-                            title: values.title,
-                            text: values.text,
-                            minutes: values.minutes,
-                            createdAt: Date.now(),
-                            notified: false,
-                            color: values.color,
-                        }
+            ) : <Formulario
+                editar={false}
+                tituloInicial={""}
+                textoInicial={""}
+                colorDeFondoInicial=""
+                minutosDeValidezInicial={0}
+                onSubmit={(values) => {
+                    const note = {
+                        id: Date.now(),
+                        title: values.title,
+                        text: values.text,
+                        minutes: values.minutes,
+                        createdAt: now,
+                        notified: false,
+                        color: values.color,
+                    }
 
-                        const updatedNotes = [...notes, note];
-                        setNotes(updatedNotes);
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedNotes));
-                    }}
-                    onCancelar={() => {}}
-                />}
+                    addNote(note);
+                }}
+                onCancelar={() => { }}
+            />}
         </div>
     );
 }
