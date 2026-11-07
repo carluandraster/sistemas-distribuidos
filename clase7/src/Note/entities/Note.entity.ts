@@ -3,5 +3,4 @@ export type Note = {
   title: string;
   content: string;
   expirationDate: Date;
-  author: string; // username of the author
 };

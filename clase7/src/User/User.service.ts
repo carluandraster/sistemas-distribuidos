@@ -1,40 +1,42 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "./entities/User.entity.js";
-import { IStorageAdapter } from "../database/IStorageAdapter.js";
+import { UserStorageAdapter } from "./UserStorageAdapter.js";
 
 @Injectable()
 export class UserService {
-    private storage: IStorageAdapter<User>;
+    private storage: UserStorageAdapter;
 
-    constructor(storage: IStorageAdapter<User>) {
+    constructor(storage: UserStorageAdapter) {
         this.storage = storage;
     }
 
-    public async buscarPorId(id: string): Promise<User | null> {
+    private async buscarPorId(id: string): Promise<User> {
         return await this.storage.findById(id)
-            .then(users => {
-                if (users.length > 0) {
-                    return users[0];
+            .then(user => {
+                if (user) {
+                    return user;
                 } else {
-                    return null;
+                    throw new Error("User not found");
                 }
             });
     }
 
     public async verificarCredenciales(user: string, password: string): Promise<boolean> {
-        return await this.storage.findById(user)
-            .then(users => {
-                if (users.length > 0) {
-                    return users[0];
-                } else {
-                    throw new Error("Usuario no encontrado");
+        return await this.buscarPorId(user)
+            .then(user => {
+                if (!user) {
+                    return false;
                 }
-            }).then(user => {
                 return user.password === password;
-            }).catch(err => {
-                console.error(err);
+            }).catch(() => {
                 return false;
             });
         
+    }
+
+    public async registrarUsuario(user: User): Promise<User> {
+        return await this.buscarPorId(user.username)
+            .then(() => {throw new Error("User already exists");})
+            .catch(() => this.storage.create(user));
     }
 }
