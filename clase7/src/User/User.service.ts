@@ -12,6 +12,7 @@ export class UserService {
 
     private async buscarPorId(id: string): Promise<User> {
         return await this.storage.findById(id)
+            .then(users => users[0])
             .then(user => {
                 if (user) {
                     return user;

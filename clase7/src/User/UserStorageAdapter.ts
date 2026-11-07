@@ -2,7 +2,7 @@ import { IStorageAdapter } from "../database/IStorageAdapter.js";
 import { User } from "./entities/User.entity.js";
 import { JsonDb } from "../database/json-db.js";
 
-export class UserStorageAdapter implements IStorageAdapter<User> {
+export class UserStorageAdapter /*implements IStorageAdapter<User>*/ {
     private db: JsonDb;
 
     constructor(db: JsonDb) {
