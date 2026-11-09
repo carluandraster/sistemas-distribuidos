@@ -1,0 +1,102 @@
+<mxfile host="65bd71144e">
+    <diagram id="mQQpGeN0Fi8OtrtIEwvg" name="Página-1">
+        <mxGraphModel dx="1799" dy="588" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-8" edge="1" parent="1" source="nY6PK0s3F3TB4MQ5Uxlh-1" style="edgeStyle=none;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="nY6PK0s3F3TB4MQ5Uxlh-9">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="184.83333333333337" y="40" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="AuthMiddleware" vertex="1">
+                    <mxGeometry height="86" width="180" x="50" y="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-2" parent="nY6PK0s3F3TB4MQ5Uxlh-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- jwtService: JWTService" vertex="1">
+                    <mxGeometry height="26" width="180" y="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-3" parent="nY6PK0s3F3TB4MQ5Uxlh-1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;labelPerimeter=1;" value="" vertex="1">
+                    <mxGeometry height="8" width="180" y="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-4" parent="nY6PK0s3F3TB4MQ5Uxlh-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ use(req: Request): boolean" vertex="1">
+                    <mxGeometry height="26" width="180" y="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-5" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Capa de Intercepción y Pre-procesamiento&lt;/h1&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;Intercepta el flujo de control teniendo acceso al objeto de solicitud (req), al de respuesta (res) y a la función next() para ceder el paso al siguiente eslabón&lt;/p&gt;" vertex="1">
+                    <mxGeometry height="136" width="280" x="500" y="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-6" edge="1" parent="1" source="nY6PK0s3F3TB4MQ5Uxlh-7" style="endArrow=classic;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="nY6PK0s3F3TB4MQ5Uxlh-1" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="140" y="50" as="sourcePoint"/>
+                        <mxPoint x="100" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Request" vertex="1">
+                    <mxGeometry height="30" width="60" x="60" y="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Response" vertex="1">
+                    <mxGeometry height="30" width="60" x="164" y="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-10" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="43" y="250" as="sourcePoint"/>
+                        <mxPoint x="783" y="250" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-11" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Capa de Validación de Entrada y Transformación&lt;/h1&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Se compone de &lt;b&gt;DTOs&lt;/b&gt; y &lt;b&gt;pipes&lt;/b&gt;&lt;/li&gt;&lt;li style=&quot;text-align: justify;&quot;&gt;&lt;b&gt;DTO:&lt;/b&gt; objeto simple que define la forma o contrato de los datos que entran y se utiliza para transportarlos entre capas. Mediante decoradores como @IsString(), @MinLength(2), @IsEmail() o @IsPositive(), declara las restricciones sintácticas de cada campo.&lt;/li&gt;&lt;li style=&quot;text-align: justify;&quot;&gt;&lt;b&gt;Pipe (Tubería):&lt;/b&gt;&amp;nbsp;clase anotada con @Injectable() que implementa PipeTransform y convierte los datos de entrada al tipo necesario justo antes de que los datos entren al método del controlador&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;/p&gt;" vertex="1">
+                    <mxGeometry height="270" width="320" x="480" y="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-12" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="43" y="560" as="sourcePoint"/>
+                        <mxPoint x="783" y="560" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-13" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Capa de Entrada/Salida HTTP&lt;/h1&gt;&lt;p&gt;Puerta de entrada HTTP de cada recurso a la API&lt;/p&gt;&lt;p&gt;Acá es donde irían los controllers.&lt;/p&gt;" vertex="1">
+                    <mxGeometry height="120" width="320" x="480" y="585" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-14" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="44" y="810" as="sourcePoint"/>
+                        <mxPoint x="784" y="810" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-15" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Capa de Lógica de Negocio&lt;/h1&gt;&lt;p&gt;Abarca todo lo que son servicios. Éstos son los que llevan a cabo las operaciones necesarias del sistema.&lt;/p&gt;" vertex="1">
+                    <mxGeometry height="120" width="320" x="480" y="840" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-16" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="43" y="1020" as="sourcePoint"/>
+                        <mxPoint x="783" y="1020" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-17" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Capa de Acceso a Datos / Persistencia&lt;/h1&gt;&lt;p&gt;Intermediario exclusivo entre la lógica de negocio y el motor de almacenamiento físico.&lt;/p&gt;" vertex="1">
+                    <mxGeometry height="150" width="320" x="480" y="1050" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-18" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="UserController" vertex="1">
+                    <mxGeometry height="86" width="160" x="-110" y="590" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-19" parent="nY6PK0s3F3TB4MQ5Uxlh-18" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ field: type" vertex="1">
+                    <mxGeometry height="26" width="160" y="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-20" parent="nY6PK0s3F3TB4MQ5Uxlh-18" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;labelPerimeter=1;" value="" vertex="1">
+                    <mxGeometry height="8" width="160" y="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-21" parent="nY6PK0s3F3TB4MQ5Uxlh-18" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ method(type): type" vertex="1">
+                    <mxGeometry height="26" width="160" y="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-22" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="NoteController" vertex="1">
+                    <mxGeometry height="86" width="160" x="240" y="590" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-23" parent="nY6PK0s3F3TB4MQ5Uxlh-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ field: type" vertex="1">
+                    <mxGeometry height="26" width="160" y="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-24" parent="nY6PK0s3F3TB4MQ5Uxlh-22" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;labelPerimeter=1;" value="" vertex="1">
+                    <mxGeometry height="8" width="160" y="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="nY6PK0s3F3TB4MQ5Uxlh-25" parent="nY6PK0s3F3TB4MQ5Uxlh-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ method(type): type" vertex="1">
+                    <mxGeometry height="26" width="160" y="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
