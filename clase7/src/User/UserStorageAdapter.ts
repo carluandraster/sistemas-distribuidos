@@ -3,11 +3,8 @@ import { User } from "./entities/User.entity.js";
 import { JsonDb } from "../database/json-db.js";
 
 export class UserStorageAdapter /*implements IStorageAdapter<User>*/ {
-    private db: JsonDb;
-
-    constructor(db: JsonDb) {
-        this.db = db;
-    }
+    constructor(private readonly db: JsonDb) { }
+    
     public async findById(id: string): Promise<User> {
         return await this.db.read().then(db => {
             const user = db.users.find(u => u.username === id);
