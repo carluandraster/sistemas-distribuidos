@@ -13,12 +13,4 @@ export class NoteService {
   public async obtenerNotas(userId: string): Promise<Note[]> {
     return this.storageAdapter.findById(userId);
   }
-
-  public async verificarExpiradas(): Promise<void> {
-    const notas = await this.storageAdapter.findAll();
-    const notasExpiradas = notas.filter(nota => nota.fechaExpiracion < new Date());
-    for (const nota of notasExpiradas) {
-      await this.storageAdapter.delete(nota.id);
-    }
-  }
 }

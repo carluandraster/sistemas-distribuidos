@@ -4,15 +4,10 @@ import { UserStorageAdapter } from "./UserStorageAdapter.js";
 
 @Injectable()
 export class UserService {
-    private storage: UserStorageAdapter;
-
-    constructor(storage: UserStorageAdapter) {
-        this.storage = storage;
-    }
+    constructor(private readonly storage: UserStorageAdapter) {}
 
     private async buscarPorId(id: string): Promise<User> {
         return await this.storage.findById(id)
-            .then(users => users[0])
             .then(user => {
                 if (user) {
                     return user;

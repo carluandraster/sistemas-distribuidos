@@ -11,6 +11,6 @@ export class NoteController {
     @Param('note') note: Note,
     @Param('user') user: string,
   ) {
-    return await this.noteService.createNote(note, user);
+    return await this.noteService.crearNota(note, user);
   }
 }
